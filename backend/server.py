@@ -31,7 +31,7 @@ class EnergyRequest(BaseModel):
 
 
 # ----- Routes -----
-@app.post("/calculate/energy")
+@app.post("/api/calculate/energy")
 def calculate_energy(data: EnergyRequest):
     try:
         result = subprocess.run(
