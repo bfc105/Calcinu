@@ -11,11 +11,12 @@ app = FastAPI(title="Scientific Calculators API")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://localhost:3000",   # React dev server
-        # add your domain later, e.g. "https://yourdomain.com"
+        "http://localhost",
+        "http://127.0.0.1",
+        "http://16.171.36.129"
     ],
     allow_credentials=True,
-    allow_methods=["*"],   # THIS enables OPTIONS
+    allow_methods=["*"],
     allow_headers=["*"],
 )
 
