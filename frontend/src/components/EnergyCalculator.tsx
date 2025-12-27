@@ -11,7 +11,7 @@ const EnergyCalculator: React.FC = () => {
     setError(null);
     setEnergy(null);
     try {
-      const response = await fetch("http://localhost:8000/calculate/energy", {
+      const response = await fetch("/api/calculate/energy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ mass }),
