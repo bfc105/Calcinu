@@ -1,0 +1,22 @@
+{
+  "something": [
+    "Non Scientific",
+    "Sport",
+    "Paddle-tennis"
+  ],
+  "Energy_Calculator": [
+    "Scientific",
+    "Physics",
+    "Energy"
+  ],
+  "norm": [
+    "Scientific",
+    "Statistics",
+    "Standradization"
+  ],
+  "z": [
+    "Scientific",
+    "Statistics",
+    "Standradization"
+  ]
+}
