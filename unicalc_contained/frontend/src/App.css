@@ -1,38 +1,107 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+/* App layout */
+.app {
+  background-color: beige;
   min-height: 100vh;
+  padding: 2rem;
+  font-family: 'Times New Roman', serif;
+}
+
+/* Titles */
+[class$="-title"] {
+  letter-spacing: 0.02em;
+}
+
+.app-title {
+  text-align: center;
+  color: #000000;
+  font-size: 3rem;
+  margin: 0;
+}
+
+.app-divider {
+  margin: 2rem 0;
+  border: 1px solid #000000;
+}
+
+/* Main layout */
+.app-layout {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 2rem;
+  align-items: flex-start; /* ensures sidebar and content align at top */
 }
 
-.App-link {
-  color: #61dafb;
+.domain-section {
+  margin-bottom: 2rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.sidebar {
+  padding-top: 10rm;
+  min-width: 500px;
+  max-width: 100%;     /* optional: never take more than 25% of screen */
+}
+
+.domain {
+  margin-bottom: 2rem;
+}
+
+.domain-title {
+  text-align: center;
+  color: #101010;
+  font-size: 2.3rem;
+  margin: 0 0 0.5rem 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 10px;
+  margin-bottom: 2rem;
+}
+
+.field {
+  margin-bottom: 2rem;
+}
+
+.field-title {
+  color: #202020;
+  font-size: 1.7rem;
+  margin: 1.5rem 0 0.5rem 0;
+}
+
+.topic {
+  margin-bottom: 1rem;
+}
+
+.topic-title {
+  color: #303030;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 0 0.25rem 0;
+}
+
+/* Component list */
+.component-list {
+  padding-left: 1rem;
+  margin: 0;
+  list-style: none; /* reset default */
+}
+
+.component-item {
+  margin: 0.25rem 0;
+  position: relative;
+}
+
+/* Custom bullet */
+.component-item::before {
+  content: "•";
+  position: absolute;
+  left: -1rem; /* aligns bullet with padding */
+  color: #2e6785;
+}
+
+/* Button styling */
+.component-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #063955;
+  text-decoration: underline;
+  font: inherit;
 }
