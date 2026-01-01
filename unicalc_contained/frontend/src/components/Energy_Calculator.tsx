@@ -26,7 +26,7 @@ const EnergyCalculator: React.FC<ToolProps> = ({
           field,
           topic,
           tool,
-          mass,
+          input: mass.toString(),
         }),
       });
 

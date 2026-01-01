@@ -70,9 +70,9 @@ def unordered_one_to_one(data: UnorderedOneToOne):
     topic = data.topic
     tool_name_parts = data.tool.split("_")
     tool_name_parts = [name[0].upper() + name[1:] for name in tool_name_parts]
-    tool = tool_name_parts.join("_")
+    tool = "_".join(tool_name_parts)
 
-    tool_path = [TOOLS_DIR, domain, field, topic].join("/")
+    tool_path = os.path.join(TOOLS_DIR, domain, field, topic)
 
     try:
         result = subprocess.run(
