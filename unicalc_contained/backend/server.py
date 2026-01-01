@@ -86,6 +86,18 @@ def unordered_one_to_one(data: UnorderedOneToOne):
 
     print(tool_path)
 
+    for entry in os.listdir("/app"):
+        print(f"app: {entry}")
+
+    for entry in os.listdir("/backend"):
+        print(f"backend: {entry}")
+
+    cwd = os.getcwd()  # current working directory
+    print("Current working directory:", cwd)
+
+    dirs = [name for name in os.listdir(cwd) if os.path.isdir(os.path.join(cwd, name))]
+    print("Directories directly visible from cwd:", dirs)
+
     try:
         result = subprocess.run(
             ["java", "-cp", tool_path, tool, data.input],
