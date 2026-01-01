@@ -65,6 +65,11 @@ def calculate_energy(data: EnergyRequest):
 
 @app.post("/api/unordered_one_to_one")
 def unordered_one_to_one(data: UnorderedOneToOne):
+
+    print("enetered correct api-call")
+
+    print(data)
+
     domain = data.domain
     field = data.field
     topic = data.topic
@@ -72,7 +77,11 @@ def unordered_one_to_one(data: UnorderedOneToOne):
     tool_name_parts = [name[0].upper() + name[1:] for name in tool_name_parts]
     tool = "_".join(tool_name_parts)
 
+    print(f"{domain}, {field}, {topic}, {tool}")
+
     tool_path = os.path.join(TOOLS_DIR, domain, field, topic)
+
+    print(tool_path)
 
     try:
         result = subprocess.run(
@@ -93,4 +102,5 @@ def unordered_one_to_one(data: UnorderedOneToOne):
     except ValueError:
         raise HTTPException(status_code=500, detail="Invalid output from calculator")
 
+    print(energy)
     return {"energy": energy}
