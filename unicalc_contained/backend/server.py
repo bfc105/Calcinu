@@ -66,10 +66,6 @@ def calculate_energy(data: EnergyRequest):
 @app.post("/api/unordered_one_to_one")
 def unordered_one_to_one(data: UnorderedOneToOne):
 
-    print("enetered correct api-call")
-
-    print(data)
-
     domain = data.domain
     domain = domain[0].upper() + domain[1:]
     field = data.field
@@ -80,23 +76,7 @@ def unordered_one_to_one(data: UnorderedOneToOne):
     tool_name_parts = [name[0].upper() + name[1:] for name in tool_name_parts]
     tool = "_".join(tool_name_parts)
 
-    print(f"{domain}, {field}, {topic}, {tool}")
-
     tool_path = os.path.join(TOOLS_DIR, domain, field, topic)
-
-    print(tool_path)
-
-    # List /app
-    try:
-        for entry in os.listdir(tool_path):
-            print(f"app: {entry}")
-    except FileNotFoundError:
-        print("Directory /app does not exist")
-    except PermissionError:
-        print("No permission to access /app")
-    except Exception as e:
-        print("Error accessing /app:", e)
-
 
     try:
         result = subprocess.run(
