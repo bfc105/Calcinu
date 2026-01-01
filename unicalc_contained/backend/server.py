@@ -80,7 +80,7 @@ def unordered_one_to_one(data: UnorderedOneToOne):
 
     try:
         result = subprocess.run(
-            ["java", "-cp", tool_path, tool, data.input],
+            ["java", "-cp", tool_path, "EnergyCalculator", data.input],
             capture_output=True,
             text=True,
             timeout=2
