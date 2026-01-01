@@ -66,36 +66,92 @@ def calculate_energy(data: EnergyRequest):
 @app.post("/api/unordered_one_to_one")
 def unordered_one_to_one(data: UnorderedOneToOne):
 
-    domain = data.domain
-    domain = domain[0].upper() + domain[1:]
-    field = data.field
-    field = field[0].upper() + field[1:]
-    topic = data.topic
-    topic = topic[0].upper() + topic[1:] 
+    print("\n===== /api/unordered_one_to_one DEBUG =====")
+
+    # ----- Normalize names -----
+    domain = data.domain[0].upper() + data.domain[1:]
+    field = data.field[0].upper() + data.field[1:]
+    topic = data.topic[0].upper() + data.topic[1:]
+
     tool_name_parts = data.tool.split("_")
     tool_name_parts = [name[0].upper() + name[1:] for name in tool_name_parts]
     tool = "_".join(tool_name_parts)
 
+    print("Domain:", domain)
+    print("Field:", field)
+    print("Topic:", topic)
+    print("Tool (Java class):", tool)
+    print("Input:", data.input)
+
+    # ----- Paths -----
     tool_path = os.path.join(TOOLS_DIR, domain, field, topic)
 
+    print("\nTOOLS_DIR:", TOOLS_DIR)
+    print("Resolved tool_path:", tool_path)
+    print("CWD:", os.getcwd())
+
+    # ----- Inspect filesystem -----
+    try:
+        print("\nContents of tool_path:")
+        for entry in os.listdir(tool_path):
+            print(" -", entry)
+    except Exception as e:
+        print("ERROR listing tool_path:", repr(e))
+
+    # ----- Check expected class file -----
+    class_file = os.path.join(tool_path, f"{tool}.class")
+    print("\nExpected class file:", class_file)
+    print("Class file exists:", os.path.exists(class_file))
+
+    # ----- Build Java command -----
+    command = [
+        "java",
+        "-cp",
+        tool_path,
+        tool,
+        str(data.input)
+    ]
+
+    print("\nRunning Java command:")
+    print(" ", " ".join(command))
+
+    # ----- Run Java -----
     try:
         result = subprocess.run(
-            ["java", "-cp", tool_path, "EnergyCalculator", data.input],
+            command,
             capture_output=True,
             text=True,
             timeout=2
         )
     except subprocess.TimeoutExpired:
+        print("ERROR: Java execution timed out")
         raise HTTPException(status_code=504, detail="Calculation timed out")
 
-    if result.returncode != 0:
-        raise HTTPException(status_code=500, detail=result.stderr)
+    # ----- Log Java output -----
+    print("\nJava return code:", result.returncode)
+    print("Java stdout:")
+    print(result.stdout or "[empty]")
+    print("Java stderr:")
+    print(result.stderr or "[empty]")
 
-    # The Java calculator prints only a number
+    # ----- Handle Java error -----
+    if result.returncode != 0:
+        raise HTTPException(
+            status_code=500,
+            detail=f"Java error: {result.stderr}"
+        )
+
+    # ----- Parse result -----
     try:
         energy = float(result.stdout.strip())
     except ValueError:
-        raise HTTPException(status_code=500, detail="Invalid output from calculator")
+        print("ERROR: Java output not a valid float")
+        raise HTTPException(
+            status_code=500,
+            detail="Invalid output from calculator"
+        )
 
-    print(energy)
+    print("\nResult energy:", energy)
+    print("===== END DEBUG =====\n")
+
     return {"energy": energy}
