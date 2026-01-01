@@ -6,7 +6,7 @@ interface ToolPageProps {
 }
 
 const ToolPage: React.FC<ToolPageProps> = ({ toolMap }) => {
-  const { toolName } = useParams<{ toolName: string }>();
+  const { domain, field, topic, toolName } = useParams();
   const navigate = useNavigate();
 
   if (!toolName) return <p>No tool selected</p>;
@@ -19,9 +19,14 @@ const ToolPage: React.FC<ToolPageProps> = ({ toolMap }) => {
     <div style={{ padding: "2rem" }}>
       <button onClick={() => navigate(-1)}>← Back</button>
       <h1>{toolName.split("_").map(w => w[0].toUpperCase() + w.slice(1)).join(" ")}</h1>
-      <ToolComponent />
+      <ToolComponent 
+        domain={domain}
+        field={field}
+        topic={topic}
+        tool={toolName}
+      />
     </div>
   );
 };
 
-export default ToolPage;
+export default ToolPage

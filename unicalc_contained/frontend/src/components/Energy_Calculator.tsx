@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import type { ToolProps } from "../types/tools";
 
-const EnergyCalculator: React.FC = () => {
+const EnergyCalculator: React.FC<ToolProps> = ({
+  domain,
+  field,
+  topic,
+  tool,
+}) => {
   const [mass, setMass] = useState<number>(1);
   const [energy, setEnergy] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
@@ -10,11 +16,18 @@ const EnergyCalculator: React.FC = () => {
     setLoading(true);
     setError(null);
     setEnergy(null);
+
     try {
-      const response = await fetch("/api/calculate/energy", {
+      const response = await fetch("/api/unordered_one_to_one", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mass }),
+        body: JSON.stringify({
+          domain,
+          field,
+          topic,
+          tool,
+          mass,
+        }),
       });
 
       if (!response.ok) {
@@ -33,15 +46,20 @@ const EnergyCalculator: React.FC = () => {
 
   return (
     <div style={{ marginTop: "1rem" }}>
+      <p style={{ opacity: 0.7 }}>
+        Domain: {domain} / Field: {field} / Topic: {topic}
+      </p>
+
       <label>
         Mass (kg):
         <input
           type="number"
           value={mass}
-          onChange={(e) => setMass(parseFloat(e.target.value))}
+          onChange={(e) => setMass(Number(e.target.value))}
           style={{ marginLeft: "0.5rem" }}
         />
       </label>
+
       <button
         onClick={handleCalculate}
         style={{ marginLeft: "1rem", padding: "0.5rem 1rem" }}

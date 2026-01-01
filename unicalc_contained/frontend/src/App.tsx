@@ -45,54 +45,54 @@ function App() {
   }
 
   // ---- MAIN PAGE LAYOUT ----
-const MainPage = () => (
-  <div className="app">
-    <h1 className="app-title">Universal Tools & Calculators</h1>
-    <hr className="app-divider" />
+  const MainPage = () => (
+    <div className="app">
+      <h1 className="app-title">Universal Tools & Calculators</h1>
+      <hr className="app-divider" />
 
-    <div className="domains-container">
-      {components &&
-        Object.entries(grouped).map(([domain, fields]) => (
-          <section key={domain} className="domain-section">
-            <h2 className="domain-title">{domain}</h2>
+      <div className="domains-container">
+        {components &&
+          Object.entries(grouped).map(([domain, fields]) => (
+            <section key={domain} className="domain-section">
+              <h2 className="domain-title">{domain}</h2>
 
-            <div className="domain-grid">
-              {Object.entries(fields).map(([field, topics]) => (
-                <section key={field} className="field-section">
-                  <h3 className="field-title">{field}</h3>
+              <div className="domain-grid">
+                {Object.entries(fields).map(([field, topics]) => (
+                  <section key={field} className="field-section">
+                    <h3 className="field-title">{field}</h3>
 
-                  {Object.entries(topics).map(([topic, names]) => (
-                    <div key={topic} className="topic-section">
-                      <h4 className="topic-title">{topic}</h4>
-                      <ul className="component-list">
-                        {names.map((name) => (
-                          <li key={name} className="component-item">
-                            <button
-                              className="component-button"
-                              onClick={() =>
-                                navigate(`/${name.toLowerCase()}`)
-                              }
-                            >
-                              {name
-                                .split("_")
-                                .map(
-                                  (w) => w.charAt(0).toUpperCase() + w.slice(1)
-                                )
-                                .join(" ")}
-                            </button>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </section>
-              ))}
-            </div>
-          </section>
-        ))}
+                    {Object.entries(topics).map(([topic, names]) => (
+                      <div key={topic} className="topic-section">
+                        <h4 className="topic-title">{topic}</h4>
+                        <ul className="component-list">
+                          {names.map((name) => (
+                            <li key={name} className="component-item">
+                              <button
+                                className="component-button"
+                                onClick={() =>
+                                  navigate(`${domain.toLowerCase()}/${field.toLowerCase()}/${topic.toLowerCase()}/${name.toLowerCase()}`)
+                                }
+                              >
+                                {name
+                                  .split("_")
+                                  .map(
+                                    (w) => w.charAt(0).toUpperCase() + w.slice(1)
+                                  )
+                                  .join(" ")}
+                              </button>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </section>
+                ))}
+              </div>
+            </section>
+          ))}
+      </div>
     </div>
-  </div>
-);
+  );
 
 
 
@@ -101,7 +101,7 @@ const MainPage = () => (
     <Routes>
       <Route path="/" element={<MainPage />} />
       <Route
-        path="/:toolName"
+        path="/:domain/:field/:topic/:toolName" 
         element={<ToolPage toolMap={toolMap} />}
       />
     </Routes>

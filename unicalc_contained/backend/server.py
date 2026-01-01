@@ -22,7 +22,7 @@ app.add_middleware(
 
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-CALC_DIR = os.path.join(BASE_DIR, "calculators")
+TOOLS_DIR = os.path.join(BASE_DIR, "tools")
 
 
 # ----- Request Models -----
@@ -30,12 +30,53 @@ class EnergyRequest(BaseModel):
     mass: float
 
 
+class UnorderedOneToOne(BaseModel):
+    domain: str
+    field: str
+    topic: str
+    tool: str
+    input: str
+
+
 # ----- Routes -----
 @app.post("/api/calculate/energy")
 def calculate_energy(data: EnergyRequest):
     try:
         result = subprocess.run(
-            ["java", "-cp", CALC_DIR, "EnergyCalculator", str(data.mass)],
+            ["java", "-cp", TOOLS_DIR, "EnergyCalculator", str(data.mass)],
+            capture_output=True,
+            text=True,
+            timeout=2
+        )
+    except subprocess.TimeoutExpired:
+        raise HTTPException(status_code=504, detail="Calculation timed out")
+
+    if result.returncode != 0:
+        raise HTTPException(status_code=500, detail=result.stderr)
+
+    # The Java calculator prints only a number
+    try:
+        energy = float(result.stdout.strip())
+    except ValueError:
+        raise HTTPException(status_code=500, detail="Invalid output from calculator")
+
+    return {"energy": energy}
+
+
+@app.post("/api/unordered_one_to_one")
+def unordered_one_to_one(data: UnorderedOneToOne):
+    domain = data.domain
+    field = data.field
+    topic = data.topic
+    tool_name_parts = data.tool.split("_")
+    tool_name_parts = [name[0].upper() + name[1:] for name in tool_name_parts]
+    tool = tool_name_parts.join("_")
+
+    tool_path = [TOOLS_DIR, domain, field, topic].join("/")
+
+    try:
+        result = subprocess.run(
+            ["java", "-cp", tool_path, tool, data.input],
             capture_output=True,
             text=True,
             timeout=2
