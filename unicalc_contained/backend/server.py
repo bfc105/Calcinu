@@ -88,7 +88,7 @@ def unordered_one_to_one(data: UnorderedOneToOne):
 
     # List /app
     try:
-        for entry in os.listdir("/app"):
+        for entry in os.listdir(tool_path):
             print(f"app: {entry}")
     except FileNotFoundError:
         print("Directory /app does not exist")
@@ -96,34 +96,6 @@ def unordered_one_to_one(data: UnorderedOneToOne):
         print("No permission to access /app")
     except Exception as e:
         print("Error accessing /app:", e)
-
-    # List /backend
-    try:
-        for entry in os.listdir("/backend"):
-            print(f"backend: {entry}")
-    except FileNotFoundError:
-        print("Directory /backend does not exist")
-    except PermissionError:
-        print("No permission to access /backend")
-    except Exception as e:
-        print("Error accessing /backend:", e)
-
-    # List current working directory
-    try:
-        cwd = os.getcwd()
-        print("Current working directory:", cwd)
-
-        dirs = [name for name in os.listdir(cwd) if os.path.isdir(os.path.join(cwd, name))]
-        print("Directories directly visible from cwd:", dirs)
-    except FileNotFoundError:
-        print("Current working directory not found!")
-    except PermissionError:
-        print("No permission to access current working directory")
-    except Exception as e:
-        print("Error accessing current working directory:", e)
-
-
-
 
 
     try:
