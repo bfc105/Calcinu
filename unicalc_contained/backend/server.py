@@ -71,8 +71,11 @@ def unordered_one_to_one(data: UnorderedOneToOne):
     print(data)
 
     domain = data.domain
+    domain = domain[0].upper() + domain[1:]
     field = data.field
+    field = field[0].upper() + field[1:]
     topic = data.topic
+    topic = topic[0].upper() + topic[1:] 
     tool_name_parts = data.tool.split("_")
     tool_name_parts = [name[0].upper() + name[1:] for name in tool_name_parts]
     tool = "_".join(tool_name_parts)
