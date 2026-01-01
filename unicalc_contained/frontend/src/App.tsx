@@ -70,7 +70,7 @@ function App() {
                               <button
                                 className="component-button"
                                 onClick={() =>
-                                  navigate(`${domain.toLowerCase()}/${field.toLowerCase()}/${topic.toLowerCase()}/${name.toLowerCase()}`)
+                                  navigate(`/${domain.toLowerCase()}/${field.toLowerCase()}/${topic.toLowerCase()}/${name.toLowerCase()}`)
                                 }
                               >
                                 {name
