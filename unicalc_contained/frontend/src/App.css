@@ -1,33 +1,28 @@
 /* App layout */
-.app {
-  background-color: beige;
-  min-height: 100vh;
-  padding: 2rem;
-  font-family: 'Times New Roman', serif;
-}
 
 /* Titles */
 [class$="-title"] {
   letter-spacing: 0.02em;
 }
 
-.app-title {
+.page-title {
   text-align: center;
   color: #000000;
   font-size: 3rem;
   margin: 0;
 }
 
-.app-divider {
+.page-divider {
   margin: 2rem 0;
   border: 1px solid #000000;
 }
 
 /* Main layout */
-.app-layout {
+.page-layout {
   display: flex;
   gap: 2rem;
-  align-items: flex-start; /* ensures sidebar and content align at top */
+  align-items: flex-start;
+  /* ensures sidebar and content align at top */
 }
 
 .domain-section {
@@ -37,7 +32,8 @@
 .sidebar {
   padding-top: 10rm;
   min-width: 500px;
-  max-width: 100%;     /* optional: never take more than 25% of screen */
+  max-width: 100%;
+  /* optional: never take more than 25% of screen */
 }
 
 .domain {
@@ -80,7 +76,8 @@
 .component-list {
   padding-left: 1rem;
   margin: 0;
-  list-style: none; /* reset default */
+  list-style: none;
+  /* reset default */
 }
 
 .component-item {
@@ -92,7 +89,8 @@
 .component-item::before {
   content: "•";
   position: absolute;
-  left: -1rem; /* aligns bullet with padding */
+  left: -1rem;
+  /* aligns bullet with padding */
   color: #2e6785;
 }
 

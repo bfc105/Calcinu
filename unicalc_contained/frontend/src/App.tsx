@@ -46,9 +46,9 @@ function App() {
 
   // ---- MAIN PAGE LAYOUT ----
   const MainPage = () => (
-    <div className="app">
-      <h1 className="app-title">Universal Tools & Calculators</h1>
-      <hr className="app-divider" />
+    <div className="page">
+      <h1 className="page-title">Fredriks Projects</h1>
+      <hr className="page-divider" />
 
       <div className="domains-container">
         {components &&

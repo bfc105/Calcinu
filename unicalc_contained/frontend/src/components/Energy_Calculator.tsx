@@ -17,14 +17,6 @@ const EnergyCalculator: React.FC<ToolProps> = ({
     setError(null);
     setEnergy(null);
 
-    console.log({
-      domain,
-      field,
-      topic,
-      tool,
-      input: mass.toString(),
-    });
-
     try {
       const response = await fetch("/api/unordered_one_to_one", {
         method: "POST",
